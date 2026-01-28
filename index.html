@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta http-equiv="X-Frame-Options" content="DENY">
     <title>LDES Due Diligence Framework | SRP</title>
     <style>
         @media print {
@@ -331,6 +334,19 @@
         footer p {
             margin-bottom: 0.5rem;
         }
+        /* Security: Prevent selection, copying, and printing */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        @media print {
+            body { display: none !important; }
+        }
+
         /* Password Protection Overlay */
         .password-overlay {
             position: fixed;
@@ -444,6 +460,40 @@
         if (sessionStorage.getItem('srpAuthenticated') === 'true') {
             document.getElementById('passwordOverlay').style.display = 'none';
         }
+
+        // Security: Disable right-click context menu
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // Security: Disable keyboard shortcuts for copying, saving, printing, screenshots
+        document.addEventListener('keydown', function(e) {
+            // Disable Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+S, Ctrl+P, Ctrl+U, F12
+            if (e.ctrlKey && ['c','v','x','s','p','u'].includes(e.key.toLowerCase())) {
+                e.preventDefault();
+                return false;
+            }
+            // Disable F12 (dev tools), PrintScreen
+            if (e.key === 'F12' || e.key === 'PrintScreen') {
+                e.preventDefault();
+                return false;
+            }
+            // Disable Ctrl+Shift+I (dev tools), Ctrl+Shift+J (console), Ctrl+Shift+C (inspect)
+            if (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase())) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Security: Detect when page loses focus (possible screenshot attempt) - show warning
+        let blurTimeout;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && sessionStorage.getItem('srpAuthenticated') === 'true') {
+                // Could add additional security measures here
+            }
+        });
+
+        // Security: Disable drag and drop
+        document.addEventListener('dragstart', e => e.preventDefault());
+        document.addEventListener('drop', e => e.preventDefault());
     </script>
 
     <header>
