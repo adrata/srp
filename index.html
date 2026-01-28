@@ -326,6 +326,44 @@
             font-size: 0.9rem;
         }
 
+        sup {
+            font-size: 0.7em;
+            color: #3182ce;
+        }
+
+        .sources {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .sources h2 {
+            color: #1a365d;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .sources ol {
+            padding-left: 1.5rem;
+            color: #4a5568;
+        }
+
+        .sources li {
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .sources a {
+            color: #2c5282;
+            text-decoration: none;
+        }
+
+        .sources a:hover {
+            text-decoration: underline;
+        }
+
         footer {
             text-align: center;
             padding: 2rem;
@@ -507,7 +545,7 @@
     <div class="container">
         <div class="intro">
             <h2>Framework Overview</h2>
-            <p>This framework provides a structured, phased approach to evaluating long duration energy storage (LDES) technology providers. LDES systems are defined as storage capable of delivering electricity for 4+ hours, with many technologies targeting 10-100+ hours of duration. Each phase serves as a gate, allowing for progressive investment of time and resources only as confidence in the technology and provider increases.</p>
+            <p>This framework provides a structured, phased approach to evaluating long duration energy storage (LDES) technology providers. LDES systems are defined as storage capable of delivering electricity for 10+ hours.<sup>1</sup> Each phase serves as a gate, allowing for progressive investment of time and resources only as confidence in the technology and provider increases.</p>
 
             <div class="key-principles">
                 <h4>Guiding Principles</h4>
@@ -700,7 +738,7 @@
 
                 <div class="best-practice">
                     <h5>Industry Best Practice</h5>
-                    <p>Per DOE guidance, LDES technologies should demonstrate TRL 8+ for commercial deployment. TRL 8 requires "actual system completed and qualified through test and demonstration." For emerging technologies (TRL 6-7), pilot projects with appropriate risk allocation may be appropriate.</p>
+                    <p>Per DOE guidance, LDES technologies should demonstrate TRL 8+ for commercial deployment.<sup>2</sup> TRL 8 requires "actual system completed and qualified through test and demonstration." For emerging technologies (TRL 6-7), pilot projects with appropriate risk allocation may be appropriate.</p>
                 </div>
 
                 <div class="red-flags">
@@ -748,7 +786,7 @@
                         <li>Can you provide a detailed cost breakdown: materials, manufacturing, BOS, installation?</li>
                         <li>What is your levelized cost of storage (LCOS) under realistic operating assumptions?</li>
                         <li>How do your economics change with different utilization profiles?</li>
-                        <li>How does your cost compare to the DOE target of $0.05/kWh for LDES?</li>
+                        <li>How does your cost compare to the DOE target of $0.05/kWh for LDES?<sup>1</sup></li>
                     </ul>
                 </div>
 
@@ -789,7 +827,7 @@
                 </div>
 
                 <div class="contract-terms">
-                    <h5>Key Contract Protections to Negotiate</h5>
+                    <h5>Key Contract Protections to Negotiate<sup>3</sup></h5>
                     <ul>
                         <li>Performance guarantees with liquidated damages for underperformance</li>
                         <li>Capacity degradation limits with buy-down or replacement remedies</li>
@@ -873,7 +911,7 @@
 
                 <div class="best-practice">
                     <h5>Industry Best Practice</h5>
-                    <p>For any significant procurement, engage an Independent Engineer (IE) firm with LDES experience to conduct technical due diligence. Firms like DNV, Black & Veatch, Sargent & Lundy, and others specialize in storage system assessment.</p>
+                    <p>For any significant procurement, engage an Independent Engineer (IE) firm with LDES experience to conduct technical due diligence.<sup>5</sup> Firms like DNV, Black & Veatch, Sargent & Lundy, and others specialize in storage system assessment.</p>
                 </div>
 
                 <div class="red-flags">
@@ -965,7 +1003,7 @@
                     <ul>
                         <li>Phased deployment with performance gates before scale-up</li>
                         <li>Strong performance guarantees with meaningful liquidated damages</li>
-                        <li>Extended warranty periods (15-20 years) with capacity guarantees</li>
+                        <li>Extended warranty periods (15-25 years) with capacity guarantees<sup>4</sup></li>
                         <li>Parent guarantee or LC backing warranty obligations</li>
                         <li>Technology escrow and step-in rights</li>
                         <li>Clear acceptance testing protocols (FAT/SAT)</li>
@@ -974,6 +1012,19 @@
                     </ul>
                 </div>
             </div>
+        </div>
+
+        <!-- Sources -->
+        <div class="sources">
+            <h2>Sources</h2>
+            <ol>
+                <li>U.S. Department of Energy. "Secretary Granholm Announces New Goal to Cut Costs of Long Duration Energy Storage by 90 Percent." July 2021. <a href="https://www.energy.gov/articles/secretary-granholm-announces-new-goal-cut-costs-long-duration-energy-storage-90-percent" target="_blank">energy.gov</a></li>
+                <li>White & Case LLP. "Long Duration Electricity Storage (LDES): Details of the cap and floor scheme." 2025. <a href="https://www.whitecase.com/insight-alert/long-duration-electricity-storage-ldes-details-cap-and-floor-scheme" target="_blank">whitecase.com</a></li>
+                <li>Morgan Lewis. "A 2025 Update on Utility-Scale Energy Storage Procurements." March 2025. <a href="https://www.morganlewis.com/pubs/2025/03/a-2025-update-on-utility-scale-energy-storage-procurements" target="_blank">morganlewis.com</a></li>
+                <li>Energy Storage News. "Making BESS warranties work: Contracts vs. reality." September 2025. <a href="https://www.ess-news.com/2025/09/19/making-bess-warranties-work-contracts-vs-reality/" target="_blank">ess-news.com</a></li>
+                <li>Marsh. "The unique construction risks of long-duration energy storage system projects." 2025. <a href="https://www.marsh.com/en/industries/construction/insights/the-unique-construction-risks-of-long-duration-energy-storage-system-projects.html" target="_blank">marsh.com</a></li>
+                <li>Long Duration Energy Storage Council. <a href="https://ldescouncil.com/" target="_blank">ldescouncil.com</a></li>
+            </ol>
         </div>
 
     </div>
