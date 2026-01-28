@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LDES Due Diligence Framework | SRP</title>
+    <style>
+        @media print {
+            .phase { break-inside: avoid; }
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+
+        .logo {
+            max-width: 180px;
+            margin-bottom: 0.75rem;
+            filter: brightness(0) invert(1);
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .intro {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .intro h2 {
+            color: #1a365d;
+            margin-bottom: 1rem;
+        }
+
+        .intro p {
+            margin-bottom: 1rem;
+        }
+
+        .key-principles {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .key-principles h4 {
+            color: #166534;
+            margin-bottom: 0.5rem;
+        }
+
+        .key-principles ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            color: #166534;
+        }
+
+        .tech-categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+            width: 150px;
+            flex-shrink: 0;
+        }
+
+        .tech-card h5 {
+            color: #1a365d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-card .trl {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .phase {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .phase-header {
+            background: #2c5282;
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .phase-number {
+            background: white;
+            color: #2c5282;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .phase-header h3 {
+            font-size: 1.3rem;
+        }
+
+        .phase-content {
+            padding: 1.5rem;
+        }
+
+        .phase-goal {
+            background: #ebf8ff;
+            border-left: 4px solid #3182ce;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .phase-goal strong {
+            color: #2c5282;
+        }
+
+        .questions-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .questions-section h4 {
+            color: #1a365d;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .questions-section ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            color: #4a5568;
+        }
+
+        .questions-section li {
+            padding: 0.4rem 0;
+        }
+
+        .gate {
+            background: #faf5ff;
+            border: 2px solid #805ad5;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .gate h5 {
+            color: #553c9a;
+            margin-bottom: 0.5rem;
+        }
+
+        .gate ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            color: #553c9a;
+        }
+
+        .red-flags {
+            background: #fff5f5;
+            border: 2px solid #e53e3e;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .red-flags h5 {
+            color: #c53030;
+            margin-bottom: 0.5rem;
+        }
+
+        .red-flags ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .red-flags li {
+            padding: 0.25rem 0 0.25rem 1.5rem;
+            position: relative;
+            color: #c53030;
+        }
+
+        .red-flags li::before {
+            content: "!";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+
+        .timeline-item {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            background: #2c5282;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .timeline-label {
+            font-size: 0.85rem;
+            color: #4a5568;
+        }
+
+        .best-practice {
+            background: #fffbeb;
+            border: 1px solid #fbbf24;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .best-practice h5 {
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .best-practice p {
+            color: #92400e;
+            font-size: 0.9rem;
+        }
+
+        .contract-terms {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .contract-terms h5 {
+            color: #0369a1;
+            margin-bottom: 0.5rem;
+        }
+
+        .contract-terms ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            color: #0369a1;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+        /* Password Protection Overlay */
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .password-box {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .password-box h2 {
+            color: #1a365d;
+            margin-bottom: 0.5rem;
+        }
+
+        .password-box p {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .password-box input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .password-box input:focus {
+            outline: none;
+            border-color: #2c5282;
+        }
+
+        .password-box button {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: #2c5282;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .password-box button:hover {
+            background: #1a365d;
+        }
+
+        .password-error {
+            color: #e53e3e;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .content-blur {
+            filter: blur(8px);
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Protection Overlay -->
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="password-box">
+            <h2>Protected Document</h2>
+            <p>Enter the access code to view this document.</p>
+            <input type="password" id="passwordInput" placeholder="Enter access code" onkeypress="if(event.key==='Enter')checkPassword()">
+            <button onclick="checkPassword()">Access Document</button>
+            <p class="password-error" id="passwordError">Incorrect access code. Please try again.</p>
+        </div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const overlay = document.getElementById('passwordOverlay');
+            const error = document.getElementById('passwordError');
+
+            if (input === 'srp202601!') {
+                overlay.style.display = 'none';
+                document.body.classList.remove('content-blur');
+                sessionStorage.setItem('srpAuthenticated', 'true');
+            } else {
+                error.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        // Check if already authenticated in this session
+        if (sessionStorage.getItem('srpAuthenticated') === 'true') {
+            document.getElementById('passwordOverlay').style.display = 'none';
+        }
+    </script>
+
+    <header>
+        <img src="https://cdn.brandfetch.io/idBWjbROip/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1767202980761" alt="SRP Logo" class="logo">
+        <h1>Long Duration Energy Storage</h1>
+        <p>Due Diligence Framework for Evaluating Technology Providers</p>
+    </header>
+
+    <div class="container">
+        <div class="intro">
+            <h2>Framework Overview</h2>
+            <p>This framework provides a structured, phased approach to evaluating long duration energy storage (LDES) technology providers. LDES systems are defined as storage capable of delivering electricity for 4+ hours, with many technologies targeting 10-100+ hours of duration. Each phase serves as a gate, allowing for progressive investment of time and resources only as confidence in the technology and provider increases.</p>
+
+            <div class="key-principles">
+                <h4>Guiding Principles</h4>
+                <ul>
+                    <li>Progressive engagement - invest more resources only as confidence grows</li>
+                    <li>Independent verification - validate claims through third parties and site visits</li>
+                    <li>Technology-appropriate assessment - different LDES types have different maturity levels</li>
+                    <li>Commercial viability focus - technical promise must translate to deliverable products</li>
+                </ul>
+            </div>
+
+            <h4 style="color: #1a365d; margin: 1.5rem 0 1rem;">LDES Technology Categories</h4>
+            <div class="tech-categories">
+                <div class="tech-card">
+                    <h5>Pumped Hydro</h5>
+                    <div class="trl">TRL 9 | Mature</div>
+                </div>
+                <div class="tech-card">
+                    <h5>Compressed Air (CAES)</h5>
+                    <div class="trl">TRL 8-9 | Commercial</div>
+                </div>
+                <div class="tech-card">
+                    <h5>Flow Batteries</h5>
+                    <div class="trl">TRL 7-8 | Demonstration</div>
+                </div>
+                <div class="tech-card">
+                    <h5>Thermal Storage</h5>
+                    <div class="trl">TRL 6-8 | Pilot/Demo</div>
+                </div>
+                <div class="tech-card">
+                    <h5>Iron-Air Batteries</h5>
+                    <div class="trl">TRL 6-7 | Pilot</div>
+                </div>
+                <div class="tech-card">
+                    <h5>Gravity Storage</h5>
+                    <div class="trl">TRL 5-7 | Development</div>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">1</div>
+                    <div class="timeline-label">Initial<br>Screening</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">2</div>
+                    <div class="timeline-label">Technical<br>Validation</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">3</div>
+                    <div class="timeline-label">Commercial<br>Assessment</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">4</div>
+                    <div class="timeline-label">Reference<br>Verification</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">5</div>
+                    <div class="timeline-label">Final<br>Evaluation</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 1 -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">1</div>
+                <h3>Initial Screening</h3>
+            </div>
+            <div class="phase-content">
+                <div class="phase-goal">
+                    <strong>Goal:</strong> Quickly assess whether the opportunity warrants further investigation. This phase should require minimal time investment and filter out non-credible pitches early. Target: 1-2 hours of engagement.
+                </div>
+
+                <div class="questions-section">
+                    <h4>Technology Fundamentals</h4>
+                    <ul>
+                        <li>What is your underlying energy storage mechanism - electrochemical, mechanical, thermal, or chemical?</li>
+                        <li>What is your round-trip efficiency, and under what conditions was it measured?</li>
+                        <li>What is your target storage duration in hours and power capacity in MW?</li>
+                        <li>What is your expected system lifespan in years, and how many cycles can it perform?</li>
+                        <li>What is your expected degradation profile over the system lifetime?</li>
+                    </ul>
+                </div>
+
+                <div class="questions-section">
+                    <h4>Team & Company Background</h4>
+                    <ul>
+                        <li>When was your company founded?</li>
+                        <li>What relevant technical background does your founding team have in energy storage?</li>
+                        <li>Who are your investors, and do they include energy-focused VCs or strategic partners?</li>
+                        <li>What is your total funding to date and most recent round?</li>
+                        <li>Do you have in-house engineering and manufacturing capability, or do you outsource?</li>
+                    </ul>
+                </div>
+
+                <div class="questions-section">
+                    <h4>Current Development State</h4>
+                    <ul>
+                        <li>What is your current Technology Readiness Level (TRL 1-9)?</li>
+                        <li>Have you built working prototypes, and at what scale (kW or MW)?</li>
+                        <li>Do you have any existing customers, pilots, or demonstration deployments?</li>
+                        <li>What third-party validation have you received from national labs, universities, or consultants?</li>
+                        <li>Are there peer-reviewed publications on your core technology?</li>
+                    </ul>
+                </div>
+
+                <div class="red-flags">
+                    <h5>Red Flags at This Stage</h5>
+                    <ul>
+                        <li>Claims that violate basic physics or thermodynamics (e.g., >100% efficiency)</li>
+                        <li>Unwillingness to explain the core technology mechanism, even at a high level</li>
+                        <li>No technical founders or domain experts on team</li>
+                        <li>Vague or evasive answers about current development status</li>
+                        <li>Claims of performance far exceeding all alternatives without scientific explanation</li>
+                        <li>Pressure tactics or discouraging questions about technical details</li>
+                        <li>Cannot provide any independent validation or testing references</li>
+                    </ul>
+                </div>
+
+                <div class="gate">
+                    <h5>Gate Criteria to Advance</h5>
+                    <ul>
+                        <li>Technology mechanism is scientifically plausible and explainable</li>
+                        <li>Team has relevant technical credibility and track record</li>
+                        <li>Claims are specific, measurable, and internally consistent</li>
+                        <li>Evidence of tangible progress beyond concepts (working hardware)</li>
+                        <li>No fundamental red flags identified</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">2</div>
+                <h3>Technical Validation</h3>
+            </div>
+            <div class="phase-content">
+                <div class="phase-goal">
+                    <strong>Goal:</strong> Conduct deeper technical evaluation to validate core claims and understand technology maturity, risks, and development pathway. This phase may require NDA execution and more significant time investment.
+                </div>
+
+                <div class="questions-section">
+                    <h4>Performance Validation</h4>
+                    <ul>
+                        <li>Can you provide raw test data from your prototype operations under NDA?</li>
+                        <li>Under what specific conditions (temperature, humidity, load profiles) were your performance metrics measured?</li>
+                        <li>How does your system's performance vary across different operating conditions?</li>
+                        <li>What is your measured degradation rate, and how many cycles have you tested?</li>
+                        <li>Have you conducted accelerated life testing? What methodology did you use?</li>
+                        <li>What is your demonstrated round-trip efficiency versus your projected efficiency?</li>
+                    </ul>
+                </div>
+
+                <div class="questions-section">
+                    <h4>System Architecture & Safety</h4>
+                    <ul>
+                        <li>What are your major system components, and who are your suppliers?</li>
+                        <li>Which components are proprietary versus commercially available off-the-shelf?</li>
+                        <li>What are your key technical risks, and how are you mitigating them?</li>
+                        <li>What failure modes have you identified and designed against?</li>
+                        <li>What is your thermal management approach and fire safety design?</li>
+                        <li>What safety certifications (UL, NFPA, etc.) have you achieved or are you pursuing?</li>
+                    </ul>
+                </div>
+
+                <div class="questions-section">
+                    <h4>Materials & Supply Chain</h4>
+                    <ul>
+                        <li>What are your critical raw materials?</li>
+                        <li>Are any of your materials supply-constrained, geopolitically sensitive, or price-volatile?</li>
+                        <li>What is your recyclability or end-of-life disposal plan?</li>
+                        <li>Does your system contain hazardous materials requiring special handling or permits?</li>
+                        <li>Do you have any single-source suppliers that represent concentration risk?</li>
+                    </ul>
+                </div>
+
+                <div class="questions-section">
+                    <h4>Independent Verification</h4>
+                    <ul>
+                        <li>Has a national lab (NREL, Sandia, PNNL) or independent facility validated your claims?</li>
+                        <li>Are there published peer-reviewed papers on your technology?</li>
+                        <li>Would you support us commissioning an independent technical review?</li>
+                        <li>What standards compliance (IEEE, IEC, UL) have you achieved?</li>
+                        <li>Have you participated in any DOE programs or received government funding?</li>
+                    </ul>
+                </div>
+
+                <div class="best-practice">
+                    <h5>Industry Best Practice</h5>
+                    <p>Per DOE guidance, LDES technologies should demonstrate TRL 8+ for commercial deployment. TRL 8 requires "actual system completed and qualified through test and demonstration." For emerging technologies (TRL 6-7), pilot projects with appropriate risk allocation may be appropriate.</p>
+                </div>
+
+                <div class="red-flags">
+                    <h5>Red Flags at This Stage</h5>
+                    <ul>
+                        <li>Refusal to share test data even under NDA</li>
+                        <li>Test conditions don't reflect real-world utility operating environments</li>
+                        <li>Critical components exist only in theory or early R&D</li>
+                        <li>No clear explanation for how lab results will scale to commercial size</li>
+                        <li>Reliance on materials with known supply constraints or cost volatility</li>
+                        <li>Large gap between demonstrated and projected performance</li>
+                        <li>No independent validation despite years of development</li>
+                    </ul>
+                </div>
+
+                <div class="gate">
+                    <h5>Gate Criteria to Advance</h5>
+                    <ul>
+                        <li>Core performance claims are supported by credible, verifiable data</li>
+                        <li>Technical risks are identified and have documented mitigation plans</li>
+                        <li>No fundamental barriers to scaling have been identified</li>
+                        <li>Independent validation exists or can be arranged</li>
+                        <li>Safety approach is credible and certifications are on track</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">3</div>
+                <h3>Commercial & Financial Assessment</h3>
+            </div>
+            <div class="phase-content">
+                <div class="phase-goal">
+                    <strong>Goal:</strong> Evaluate the commercial viability, manufacturing readiness, and financial health of the provider to assess delivery and counterparty risk.
+                </div>
+
+                <div class="questions-section">
+                    <h4>Cost & Economics</h4>
+                    <ul>
+                        <li>What is your current installed cost per kWh and per kW at your current scale?</li>
+                        <li>What is your projected cost at commercial scale, and what assumptions drive that?</li>
+                        <li>Can you provide a detailed cost breakdown: materials, manufacturing, BOS, installation?</li>
+                        <li>What is your levelized cost of storage (LCOS) under realistic operating assumptions?</li>
+                        <li>How do your economics change with different utilization profiles?</li>
+                        <li>How does your cost compare to the DOE target of $0.05/kWh for LDES?</li>
+                    </ul>
+                </div>
+
+                <div class="questions-section">
+                    <h4>Manufacturing Readiness</h4>
+                    <ul>
+                        <li>Where and how will your systems be manufactured - in-house, contract, or partners?</li>
+                        <li>What is your current manufacturing capacity in MW/year, and what is your expansion plan?</li>
+                        <li>What is your realistic lead time from order to commissioning?</li>
+                        <li>What quality control and testing processes do you have in place?</li>
+                        <li>Are there any single points of failure in your manufacturing supply chain?</li>
+                        <li>What is your Manufacturing Readiness Level (MRL)?</li>
+                    </ul>
+                </div>
+
+                <div class="questions-section">
+                    <h4>Company Financial Health</h4>
+                    <ul>
+                        <li>What is your current cash runway and monthly burn rate?</li>
+                        <li>What is your plan and timeline for your next funding round?</li>
+                        <li>Who are your major shareholders, and can you describe your cap table structure?</li>
+                        <li>Are there any pending legal issues, IP disputes, or regulatory concerns?</li>
+                        <li>What happens to warranties and support obligations if your company fails?</li>
+                        <li>Is there parent company backing or can you provide financial guarantees?</li>
+                    </ul>
+                </div>
+
+                <div class="questions-section">
+                    <h4>Warranty & Support Structure</h4>
+                    <ul>
+                        <li>What commercial warranty (defect/workmanship) do you offer, and for how long?</li>
+                        <li>What performance warranty do you offer for capacity, efficiency, and availability?</li>
+                        <li>What is your O&M model, and what are expected annual costs as a percentage of capex?</li>
+                        <li>What is your guaranteed response time for service issues?</li>
+                        <li>Is remote monitoring and diagnostics included in your offering?</li>
+                        <li>What spare parts availability and pricing commitments can you provide?</li>
+                    </ul>
+                </div>
+
+                <div class="contract-terms">
+                    <h5>Key Contract Protections to Negotiate</h5>
+                    <ul>
+                        <li>Performance guarantees with liquidated damages for underperformance</li>
+                        <li>Capacity degradation limits with buy-down or replacement remedies</li>
+                        <li>Milestone payments tied to FAT (Factory Acceptance Test) and SAT (Site Acceptance Test)</li>
+                        <li>Delay penalties (typically 1% per week, capped at 10-15%)</li>
+                        <li>Parent company guarantee or letter of credit for warranty obligations</li>
+                        <li>Technology escrow for critical IP in case of company failure</li>
+                        <li>Serial defect warranty provisions</li>
+                    </ul>
+                </div>
+
+                <div class="red-flags">
+                    <h5>Red Flags at This Stage</h5>
+                    <ul>
+                        <li>Cost projections rely on unproven manufacturing breakthroughs or "learning curve" assumptions</li>
+                        <li>No clear, funded path from current state to volume manufacturing</li>
+                        <li>Company has less than 18 months runway with no committed funding path</li>
+                        <li>Warranties that seem too good to be true or are vaguely defined</li>
+                        <li>Unable or unwilling to provide detailed cost breakdowns</li>
+                        <li>Resistance to standard contract protections (LDs, guarantees, escrow)</li>
+                        <li>Cap table issues or investor conflicts that could affect operations</li>
+                    </ul>
+                </div>
+
+                <div class="gate">
+                    <h5>Gate Criteria to Advance</h5>
+                    <ul>
+                        <li>Economics are competitive or have credible path to competitiveness</li>
+                        <li>Manufacturing plan is credible and adequately funded</li>
+                        <li>Company has adequate financial runway or committed funding</li>
+                        <li>Warranty and support model is reasonable and appropriately backed</li>
+                        <li>Acceptable contract terms can be negotiated</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">4</div>
+                <h3>Reference Verification</h3>
+            </div>
+            <div class="phase-content">
+                <div class="phase-goal">
+                    <strong>Goal:</strong> Validate claims through direct verification with existing customers, site visits, and third-party expert assessment. This is critical for emerging technology providers.
+                </div>
+
+                <div class="questions-section">
+                    <h4>Customer References</h4>
+                    <ul>
+                        <li>Can we speak directly with your existing customers or pilot hosts without you present?</li>
+                        <li>Can you provide contact information for at least three reference customers?</li>
+                        <li>What has been your actual performance versus contracted performance at existing sites?</li>
+                        <li>What technical issues have arisen at deployments, and how did you resolve them?</li>
+                        <li>Were there any schedule delays on past projects? How were they handled?</li>
+                    </ul>
+                </div>
+
+                <div class="questions-section">
+                    <h4>Site Visits</h4>
+                    <ul>
+                        <li>Can we visit one of your operating installations and observe live operations?</li>
+                        <li>Can we tour your manufacturing facilities and see your production processes?</li>
+                        <li>Can we observe your system under various operating conditions including charge/discharge cycles?</li>
+                        <li>Can we review real operational data directly from your monitoring system?</li>
+                        <li>Can we speak with your on-site operations and maintenance personnel?</li>
+                    </ul>
+                </div>
+
+                <div class="questions-section">
+                    <h4>Independent Expert Assessment</h4>
+                    <ul>
+                        <li>What do independent industry analysts say about your technology and company?</li>
+                        <li>Would you support us engaging a third-party Independent Engineer for technical review?</li>
+                        <li>What is the broader scientific community's view of your technology approach?</li>
+                        <li>How does your technology compare to competing LDES solutions in maturity and cost?</li>
+                        <li>What do national lab researchers say about your technology category?</li>
+                    </ul>
+                </div>
+
+                <div class="best-practice">
+                    <h5>Industry Best Practice</h5>
+                    <p>For any significant procurement, engage an Independent Engineer (IE) firm with LDES experience to conduct technical due diligence. Firms like DNV, Black & Veatch, Sargent & Lundy, and others specialize in storage system assessment.</p>
+                </div>
+
+                <div class="red-flags">
+                    <h5>Red Flags at This Stage</h5>
+                    <ul>
+                        <li>No referenceable customers despite claims of deployments</li>
+                        <li>Existing customers report significant performance gaps vs. promises</li>
+                        <li>Unable or unwilling to allow unescorted customer conversations</li>
+                        <li>Site visit requests repeatedly delayed or denied</li>
+                        <li>Operating systems not performing to specification</li>
+                        <li>Pattern of over-promising and under-delivering</li>
+                        <li>References all have equity relationships with the provider</li>
+                    </ul>
+                </div>
+
+                <div class="gate">
+                    <h5>Gate Criteria to Advance</h5>
+                    <ul>
+                        <li>Customer references are positive, credible, and independent</li>
+                        <li>Site visits confirm technology performs as claimed</li>
+                        <li>No pattern of overpromising or delivery failures identified</li>
+                        <li>Third-party experts validate the technology approach</li>
+                        <li>Competitive assessment confirms this is a reasonable choice</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 5 -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">5</div>
+                <h3>Final Evaluation & Decision</h3>
+            </div>
+            <div class="phase-content">
+                <div class="phase-goal">
+                    <strong>Goal:</strong> Synthesize all findings, assess overall risk, and make a structured decision on whether and how to proceed with engagement.
+                </div>
+
+                <div class="questions-section">
+                    <h4>Risk Assessment Summary (Internal)</h4>
+                    <ul>
+                        <li>What are the top 3-5 risks we have identified and their potential impacts?</li>
+                        <li>What mitigations can we build into contract terms?</li>
+                        <li>What is this provider's demonstrated track record of meeting commitments?</li>
+                        <li>What is our financial exposure if the provider fails or technology underperforms?</li>
+                        <li>What is the reputational risk if this project fails publicly?</li>
+                        <li>Are the risks appropriate given the potential benefits and strategic value?</li>
+                    </ul>
+                </div>
+
+                <div class="questions-section">
+                    <h4>Strategic Fit (Internal)</h4>
+                    <ul>
+                        <li>How does this technology fit our specific grid needs and use cases?</li>
+                        <li>What is the integration complexity with our existing infrastructure?</li>
+                        <li>Are there regulatory, permitting, or interconnection considerations we need to address?</li>
+                        <li>How does this compare to alternative LDES solutions we have evaluated?</li>
+                        <li>Does this align with our decarbonization timeline and IRP commitments?</li>
+                        <li>What is the strategic value of early adoption versus waiting for technology maturation?</li>
+                    </ul>
+                </div>
+
+                <div class="questions-section">
+                    <h4>Engagement Structure Options (Internal)</h4>
+                    <ul>
+                        <li>Should we start with a small pilot or proceed to larger deployment?</li>
+                        <li>What contractual protections are essential versus nice-to-have?</li>
+                        <li>What performance guarantees and remedies are appropriate for this risk level?</li>
+                        <li>Should we consider co-development, equity investment, or offtake agreement?</li>
+                        <li>What ongoing monitoring, reporting, and governance structure do we need?</li>
+                        <li>What are the appropriate milestone gates for larger follow-on deployment?</li>
+                    </ul>
+                </div>
+
+                <div class="gate">
+                    <h5>Decision Framework</h5>
+                    <ul>
+                        <li><strong>Proceed with Pilot:</strong> Technology promising but unproven at utility scale; limit initial exposure; define success criteria for scale-up</li>
+                        <li><strong>Proceed with Deployment:</strong> High confidence in technology and provider; acceptable risk profile; appropriate contract protections in place</li>
+                        <li><strong>Continue Monitoring:</strong> Interesting but not ready; specific milestones to trigger re-evaluation in 6-12 months</li>
+                        <li><strong>Strategic Partnership:</strong> High potential but needs support; consider co-development, demonstration hosting, or strategic investment</li>
+                        <li><strong>Decline:</strong> Fundamental concerns identified or better alternatives available; document reasons for future reference</li>
+                    </ul>
+                </div>
+
+                <div class="contract-terms">
+                    <h5>Recommended Contract Structure for Emerging Technologies</h5>
+                    <ul>
+                        <li>Phased deployment with performance gates before scale-up</li>
+                        <li>Strong performance guarantees with meaningful liquidated damages</li>
+                        <li>Extended warranty periods (15-20 years) with capacity guarantees</li>
+                        <li>Parent guarantee or LC backing warranty obligations</li>
+                        <li>Technology escrow and step-in rights</li>
+                        <li>Clear acceptance testing protocols (FAT/SAT)</li>
+                        <li>Regular performance reporting and audit rights</li>
+                        <li>Defined change order and dispute resolution processes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p><strong>LDES Due Diligence Framework</strong> | Internal Planning Document</p>
+        <p>Salt River Project | 2026</p>
+    </footer>
+</body>
+</html>
